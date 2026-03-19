@@ -122,9 +122,9 @@ function ChariotModal({ chariots, title, onClose }) {
 
 function StatCard({ label, value, color, bg, borderColor }) {
   return (
-    <div style={{ background: bg || "#f9fafb", border: `1px solid ${borderColor || "#e5e7eb"}`, borderRadius: 12, padding: "12px 14px", borderTop: `3px solid ${color}` }}>
-      <div className="stat-label" style={{ fontSize: 11, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 6 }}>{label}</div>
-      <div className="stat-val" style={{ fontSize: 30, fontWeight: 800, color, lineHeight: 1 }}>{value}</div>
+    <div className="stat-card-inner" style={{ background: bg || "#f9fafb", border: `1px solid ${borderColor || "#e5e7eb"}`, borderRadius: 12, padding: "12px 10px", borderTop: `3px solid ${color}` }}>
+      <div className="stat-label" style={{ fontSize: 10, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.4px", marginBottom: 5, lineHeight: 1.3 }}>{label}</div>
+      <div className="stat-val" style={{ fontSize: 28, fontWeight: 800, color, lineHeight: 1 }}>{value}</div>
     </div>
   );
 }
@@ -219,9 +219,9 @@ export default function App() {
         </div>
 
         {/* SECTION TITLE */}
-        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
+        <div className="section-row" style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
           <span style={{ fontSize: 13, fontWeight: 700, color: "#374151", textTransform: "uppercase", letterSpacing: "1px", whiteSpace: "nowrap" }}>Résumé — Balayage manuel</span>
-          <div style={{ flex: 1, height: 1, background: "#e5e7eb" }} />
+          <div style={{ flex: 1, height: 1, background: "#e5e7eb", minWidth: 10 }} />
           <span className="hint-text">Cliquer sur un nombre pour voir les détails</span>
         </div>
 
@@ -309,25 +309,25 @@ export default function App() {
         button { font-family: inherit; }
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
-        .stat-grid { display: grid; grid-template-columns: repeat(6,1fr); gap: 12px; margin-bottom: 24px; }
+        .stat-grid { display: grid; grid-template-columns: repeat(6,1fr); gap: 12px; margin-bottom: 20px; }
         .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 14px; }
-        .table-scroll table { min-width: 520px; }
-        .hint-text { font-size: 12px; color: #9ca3af; }
-        @media (max-width: 768px) {
+        .table-scroll table { min-width: 520px; width: 100%; }
+        .hint-text { font-size: 12px; color: #9ca3af; white-space: nowrap; }
+        .section-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: nowrap; overflow: hidden; }
+        @media (max-width: 900px) {
           .stat-grid { grid-template-columns: repeat(3,1fr); gap: 8px; }
+          .hint-text { display: none; }
           .main-pad { padding: 14px 12px !important; }
           .header-pad { padding: 12px 14px !important; }
-          .header-title { font-size: 17px !important; }
-          .hint-text { display: none; }
         }
-        @media (max-width: 480px) {
+        @media (max-width: 500px) {
           .stat-grid { grid-template-columns: repeat(3,1fr); gap: 6px; }
-          .stat-val { font-size: 24px !important; }
-          .stat-label { font-size: 10px !important; }
+          .stat-val { font-size: 22px !important; }
+          .stat-label { font-size: 9px !important; letter-spacing: 0 !important; }
+          .stat-card-inner { padding: 10px 8px !important; }
+          .header-title { font-size: 15px !important; }
           .header-subtitle { display: none; }
-        }
-        @media (max-width: 360px) {
-          .stat-grid { grid-template-columns: repeat(2,1fr); }
+          .live-badge span.live-label { display: none; }
         }
       `}</style>
     </div>
