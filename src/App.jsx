@@ -122,9 +122,9 @@ function ChariotModal({ chariots, title, onClose }) {
 
 function StatCard({ label, value, color, bg, borderColor }) {
   return (
-    <div style={{ background: bg || "#f9fafb", border: `1px solid ${borderColor || "#e5e7eb"}`, borderRadius: 12, padding: "14px 16px", borderTop: `3px solid ${color}` }}>
-      <div style={{ fontSize: 11, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 6 }}>{label}</div>
-      <div style={{ fontSize: 30, fontWeight: 800, color, lineHeight: 1 }}>{value}</div>
+    <div style={{ background: bg || "#f9fafb", border: `1px solid ${borderColor || "#e5e7eb"}`, borderRadius: 12, padding: "12px 14px", borderTop: `3px solid ${color}` }}>
+      <div className="stat-label" style={{ fontSize: 11, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 6 }}>{label}</div>
+      <div className="stat-val" style={{ fontSize: 30, fontWeight: 800, color, lineHeight: 1 }}>{value}</div>
     </div>
   );
 }
@@ -191,10 +191,10 @@ export default function App() {
   return (
     <div style={{ fontFamily: "'DM Sans', system-ui, sans-serif", background: "#f8fafc", minHeight: "100vh" }}>
       {/* HEADER */}
-      <div style={{ background: "#111827", padding: "16px 28px", display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky", top: 0, zIndex: 50, boxShadow: "0 2px 12px rgba(0,0,0,0.3)" }}>
+      <div className="header-pad" style={{ background: "#111827", padding: "16px 28px", display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky", top: 0, zIndex: 50, boxShadow: "0 2px 12px rgba(0,0,0,0.3)" }}>
         <div>
-          <div style={{ fontSize: 20, fontWeight: 800, color: "#fff", letterSpacing: "0.5px" }}>⚡ Tableau de bord</div>
-          <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 2 }}>Surveillance en temps réel de la flotte</div>
+          <div className="header-title" style={{ fontSize: 20, fontWeight: 800, color: "#fff", letterSpacing: "0.5px" }}>⚡ Tableau de bord</div>
+          <div className="header-subtitle" style={{ fontSize: 12, color: "#9ca3af", marginTop: 2 }}>Surveillance en temps réel de la flotte</div>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 6, background: "#064e3b", border: "1px solid #10b981", padding: "4px 12px", borderRadius: 20, fontSize: 11, fontWeight: 700, color: "#10b981", textTransform: "uppercase" }}>
@@ -207,9 +207,9 @@ export default function App() {
         </div>
       </div>
 
-      <div style={{ maxWidth: 1300, margin: "0 auto", padding: "20px 24px" }}>
+      <div className="main-pad" style={{ maxWidth: 1300, margin: "0 auto", padding: "20px 24px" }}>
         {/* STAT CARDS */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: 12, marginBottom: 24 }}>
+        <div className="stat-grid">
           <StatCard label="Total chariots" value={RAW_DATA.length} color="#1d4ed8" bg="#eff6ff" borderColor="#bfdbfe" />
           <StatCard label="95–100%" value={totals.cat1.length} color="#16a34a" bg="#f0fdf4" borderColor="#bbf7d0" />
           <StatCard label="90–95%" value={totals.cat2.length} color="#15803d" bg="#dcfce7" borderColor="#86efac" />
@@ -222,7 +222,7 @@ export default function App() {
         <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
           <span style={{ fontSize: 13, fontWeight: 700, color: "#374151", textTransform: "uppercase", letterSpacing: "1px", whiteSpace: "nowrap" }}>Résumé — Balayage manuel</span>
           <div style={{ flex: 1, height: 1, background: "#e5e7eb" }} />
-          <span style={{ fontSize: 12, color: "#9ca3af" }}>Cliquer sur un nombre pour voir les détails</span>
+          <span className="hint-text">Cliquer sur un nombre pour voir les détails</span>
         </div>
 
         {/* LEGEND */}
@@ -239,7 +239,7 @@ export default function App() {
         </div>
 
         {/* TABLE */}
-        <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, overflow: "hidden", boxShadow: "0 1px 4px rgba(0,0,0,0.06)", marginBottom: 8 }}>
+        <div className="table-scroll" style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, boxShadow: "0 1px 4px rgba(0,0,0,0.06)", marginBottom: 8 }}>
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <thead>
               <tr>
@@ -309,6 +309,26 @@ export default function App() {
         button { font-family: inherit; }
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+        .stat-grid { display: grid; grid-template-columns: repeat(6,1fr); gap: 12px; margin-bottom: 24px; }
+        .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 14px; }
+        .table-scroll table { min-width: 520px; }
+        .hint-text { font-size: 12px; color: #9ca3af; }
+        @media (max-width: 768px) {
+          .stat-grid { grid-template-columns: repeat(3,1fr); gap: 8px; }
+          .main-pad { padding: 14px 12px !important; }
+          .header-pad { padding: 12px 14px !important; }
+          .header-title { font-size: 17px !important; }
+          .hint-text { display: none; }
+        }
+        @media (max-width: 480px) {
+          .stat-grid { grid-template-columns: repeat(3,1fr); gap: 6px; }
+          .stat-val { font-size: 24px !important; }
+          .stat-label { font-size: 10px !important; }
+          .header-subtitle { display: none; }
+        }
+        @media (max-width: 360px) {
+          .stat-grid { grid-template-columns: repeat(2,1fr); }
+        }
       `}</style>
     </div>
   );
